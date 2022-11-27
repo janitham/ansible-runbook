@@ -10,6 +10,11 @@
           #vyos.vyos.vyos_facts:
           #gather_subset: all
 
+    - name: Change the working directory to somedir/ before executing the command
+      ansible.builtin.shell: gradle clean build -x test
+      args:
+        chdir: /home/janitha/ws/CMM707/registration-service/registration-service/
+
     - name: Display the config
       debug:
         msg: "The hostname is and the OS is"
