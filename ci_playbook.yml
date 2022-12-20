@@ -10,12 +10,13 @@
       debug:
         msg: "Ci Pipeline for registration service, is starting"
 
-    - name: Gradle Build
-      ansible.builtin.shell: gradle clean build -x test
-      args:
-        chdir: /home/janitha/ws/CMM707/registration-service/registration-service/
+    - name: Apply Page Template
+      template:
+        src: files/env-template.j2
+        dest: /var/tmp/env-template.yaml
 
-    - name: Building and pushing docker image to the DockerHub
-      ansible.builtin.shell: gradle jib -x test
+    - name: Download Apache tarball file
+      shell: kubectl apply -f env-template.yaml
       args:
-        chdir: /home/janitha/ws/CMM707/registration-service/registration-service/
+        chdir: /var/tmp
+        warn: false
