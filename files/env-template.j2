@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: dev-env
+  name: {{ env_name }}
   namespace: argocd
 spec:
   destination:
-    namespace: dev
+    namespace: {{ namespace }}
     server: https://kubernetes.default.svc
   project: default
   source:
     path: .
     repoURL: https://github.com/janitham/cmm707-gitops.git
-    targetRevision: HEAD
+    targetRevision: {{branch}}
   syncPolicy:
     automated:
       prune: true
