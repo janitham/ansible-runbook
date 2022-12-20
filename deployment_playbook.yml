@@ -1,21 +1,20 @@
 ---
 
-- name: CI pipeline to inegerate registration service
+- name: Runbook to Deploy Environments
   connection: ansible.netcommon.network_cli
   gather_facts: false
   hosts: all
   tasks:
-
     - name: Displaying Starting Message
       debug:
-        msg: "Ci Pipeline for registration service, is starting"
+        msg: "Deploying {{ branch }} in the {{ env_name }}"
 
-    - name: Apply Page Template
+    - name: Creating Application
       template:
         src: files/env-template.j2
         dest: /var/tmp/env-template.yaml
 
-    - name: Download Apache tarball file
+    - name: Deploying Application
       shell: kubectl apply -f env-template.yaml
       args:
         chdir: /var/tmp
